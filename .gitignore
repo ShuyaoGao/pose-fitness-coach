@@ -1,0 +1,9 @@
+node_modules/
+release/
+dist/
+public/mediapipe-wasm/
+.DS_Store
+Thumbs.db
+*.log
+.pytest_cache/
+__pycache__/

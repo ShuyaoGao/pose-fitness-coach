@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>私人智能教练 · 姿态识别 + 规则引擎</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-mode="watch">
+<header class="topbar" id="topbar">
+  <div class="brand">私人智能教练<small>姿态网络负责“看见”，规则负责“判断”</small></div>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="模式">
+    <button class="tab active" data-mode="watch" data-tip="播放程序生成的示例动作（不是真人录制），不需要摄像头。">看示例</button>
+    <button class="tab" data-mode="live" data-tip="打开摄像头自己练：正对镜头，后退到从头到脚踝都在画面里（像下面这样）。画面只在本机处理。" data-tip-anim="squat_good">我来练</button>
+    <button class="tab" data-mode="tasks" data-tip="跟着任务清单一步步看懂规则，完成一项自动打勾。"><span class="full">练习任务</span><span class="short">任务</span></button>
+  </nav>
+  <div class="top-actions">
+    <label class="switch" data-tip="把右侧面板放大，适合投影（快捷键 B）"><input type="checkbox" id="bigScreen"> 大屏模式</label>
+    <button id="helpBtn" class="icon-btn" title="操作说明（H）" aria-label="操作说明">?</button>
+    <button id="exitBtn" class="exit-btn">退出</button>
+  </div>
+  <button id="menuBtn" class="menu-btn" aria-label="菜单" aria-expanded="false" aria-controls="menu">☰</button>
+</header>
+<div id="menu" class="menu" hidden>
+  <button id="menuHelp">操作说明</button>
+  <button id="menuPanel">看判定依据</button>
+  <button id="menuSettings">更多设置</button>
+  <div class="sep"></div>
+  <button id="menuExit" class="danger">退出</button>
+</div>
+
+<main class="layout">
+  <!-- ================= 左栏：主画面 + 控制 + 说明 ================= -->
+  <section class="left">
+    <div class="stage-wrap" id="stageWrap">
+      <canvas id="stage" width="640" height="480"></canvas>
+      <video id="video" playsinline autoplay muted></video>
+      <div class="stage-badge watch-only">程序生成的示例动作，不是真人录制</div>
+      <div class="stage-badge live-only">摄像头画面只在本机处理，不上传</div>
+      <div class="stage-count"><span id="countNum">0</span><small>次</small></div>
+      <div class="stage-phase" id="phaseTag">—</div>
+      <div class="stage-caption hidden" id="caption"></div>
+      <div class="stage-hint hidden" id="stageHint"></div>
+    </div>
+
+    <!-- 手机竖屏：计数 / 状态大字 + 大按钮（电脑上不显示） -->
+    <div class="mob-stats" id="mobStats">
+      <div class="ms-count"><b id="mCount">0</b><small>次</small></div>
+      <div class="ms-info">
+        <div class="ms-line"><span id="mPhase">—</span><span id="mMetric" class="muted">—</span></div>
+        <div class="ms-verdict" id="mVerdict"></div>
+      </div>
+    </div>
+    <div class="mob-bar" id="mobBar">
+      <button id="mStart" class="mbtn primary">⏸ 暂停</button>
+      <button id="mSwap" class="mbtn">换动作</button>
+      <button id="mReplay" class="mbtn">回放</button>
+      <button id="mPanel" class="mbtn wide">看判定依据</button>
+    </div>
+
+    <div class="mob-scroll" id="mobScroll">
+    <div class="controls">
+      <div class="row">
+        <label>动作
+          <select id="exerciseSel" data-tip="深蹲看膝角，开合跳看踝距与肩宽之比。" data-tip-anim="jj_good">
+            <option value="squat">深蹲</option>
+            <option value="jumpingJack">开合跳</option>
+          </select>
+        </label>
+        <label class="watch-only grow">示例片段 <select id="clipSel"></select></label>
+        <span class="live-only">
+          <button id="camBtn" class="btn primary">● 开摄像头</button>
+          <button id="resetBtn" class="btn" disabled data-tip="把这一组记进训练历史，计数从 0 重新开始。">结束本组</button>
+        </span>
+      </div>
+
+      <div class="row presets">
+        <span class="row-label" data-tip="同一段动作，阈值不同，判定结果就不同。切换档位后，片段会按新阈值从头重算。">判定严格度</span>
+        <div class="seg" id="presetBtns"></div>
+        <details id="fineTune"><summary>细调阈值</summary><div id="sliders"></div></details>
+      </div>
+      <p class="preset-desc" id="presetDesc"></p>
+
+      <div class="row playback watch-only">
+        <button id="restartBtn" class="btn" title="从头播放">⏮</button>
+        <button id="backBtn" class="btn" title="后退一帧（←）">◀▮</button>
+        <button id="playBtn" class="btn primary">⏸ 暂停</button>
+        <button id="stepBtn" class="btn" title="前进一帧（→）" data-tip="暂停后一帧一帧看，状态机在哪一帧翻转一目了然（快捷键 → / ←）。">▮▶</button>
+        <span class="seg" id="speedBtns"><button data-speed="0.5">0.5×</button><button data-speed="1" class="on">1×</button><button data-speed="2">2×</button></span>
+        <input type="range" id="progress" min="0" max="1" value="0" aria-label="进度">
+        <span class="time" id="timeText">0.0 秒</span>
+        <label class="check"><input type="checkbox" id="autoNext" checked> 自动连播</label>
+      </div>
+    </div>
+
+    <div class="info">
+      <div class="watch-only info-watch">
+        <p class="clip-note" id="clipNote"></p>
+      </div>
+      <div class="tasks-only">
+        <div class="task-head">练习任务 <b id="taskCount"></b> <button class="mini" id="taskReset">清空记录</button></div>
+        <ol class="task-list" id="taskList"></ol>
+      </div>
+      <div class="live-only">
+        <p class="engine-info" id="engineInfo">姿态引擎在第一次开摄像头时加载（约 22 MB，都在本地，不联网）。</p>
+        <div class="history-head">训练历史 <button class="mini" id="clearHistoryBtn">清空</button></div>
+        <p class="history-totals" id="historyTotals"></p>
+        <ul class="history-list" id="historyList"></ul>
+      </div>
+      <div class="log-head">教练反馈</div>
+      <ul class="log" id="log"></ul>
+      <details class="more" id="moreSettings">
+        <summary>更多设置</summary>
+        <label class="check"><input type="checkbox" id="speechToggle"> <span id="speechLabel">语音播报（默认关）</span></label>
+        <label class="check"><input type="checkbox" id="llmToggle"> 本机大模型点评（高级，默认关）</label>
+        <p class="muted small" id="llmStatus">关闭中：组总结使用模板话术。大模型只负责把规则的结论说成人话，从不判断动作对错。</p>
+      </details>
+    </div>
+    </div>
+  </section>
+
+  <!-- ================= 右栏：规则引擎面板 ================= -->
+  <section class="right" id="right">
+    <h2>为什么这样判 <small>规则引擎面板：所有数值都是此刻规则真正用到的</small></h2>
+    <div class="card curve-card">
+      <div class="card-head"><span id="curveTitle">膝关节角度（实时）</span><b id="curveValue">—</b>
+        <span class="muted small">虚线是阈值；浅色底 = 状态机处于“下蹲 / 张开”；✓ ✗ = 每完成一次的判定</span></div>
+      <canvas id="curve"></canvas>
+    </div>
+    <div class="row2">
+      <div class="card">
+        <div class="card-head">状态机<span class="muted small">带滞回：进、出用两条不同的线，防止抖动重复计数</span></div>
+        <div class="fsm" id="fsm"></div>
+        <p class="fsm-live" id="fsmLive"></p>
+      </div>
+      <div class="card">
+        <div class="card-head">本次判定依据</div>
+        <div id="verdict"></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="card">
+        <div class="card-head">发力肌群<span class="muted small">动作越到位，颜色越深</span></div>
+        <div class="muscles"><div id="muscleFront" data-label="正面"></div><div id="muscleBack" data-label="背面"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head">姿态网络输出：33 个关键点的可见度</div>
+        <p class="muted small">姿态网络（MediaPipe BlazePose）是第三方黑盒，只负责输出这 33 个点的位置和可见度。<span id="visHint"></span></p>
+        <div class="vis" id="visGrid"></div>
+        <p class="vis-summary" id="visSummary"></p>
+      </div>
+    </div>
+  </section>
+</main>
+<button id="panelClose" class="panel-close" hidden>返回</button>
+
+<footer class="footer" id="footer"></footer>
+
+<div class="rotate-hint" id="rotateHint">
+  <div>
+    <b>竖屏体验更佳</b>
+    <p>画面和按钮是按竖屏设计的，请把手机转回竖屏。</p>
+    <button id="rotateOk">仍然横屏继续</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="modal-box">
+    <h2 id="helpTitle">怎么用（30 秒看懂）</h2>
+    <div class="modal-body" id="helpBody">
+      <div class="help-grid">
+        <canvas id="helpMini" width="200" height="150"></canvas>
+        <ol class="kbd-only">
+          <li><b>顶部三个模式</b>：「看示例」播放程序生成的骨架动作（不是真人录制）；「我来练」打开摄像头自己做；「练习任务」带清单一步步看懂。</li>
+          <li><b>左边</b>：骨架画面、动作和片段选择、判定严格度、播放控制。</li>
+          <li><b>右边</b>：为什么这样判。曲线穿过虚线 → 状态机翻转 → 次数 +1 → 逐条列出判定依据。</li>
+          <li><b>试一试</b>：把严格度从「标准」换成「严格」，同一段动作的判定会变。</li>
+        </ol>
+        <ol class="touch-only">
+          <li><b>顶部三个模式</b>：「看示例」播放程序生成的骨架动作（不是真人录制）；「我来练」打开前置摄像头自己做；「任务」带清单一步步看懂。</li>
+          <li><b>上方是画面</b>，下面是次数和状态；大按钮「开始 / 暂停」「换动作」「回放」。</li>
+          <li><b>「看判定依据」</b>全屏打开规则引擎面板：曲线穿过虚线 → 状态机翻转 → 次数 +1 → 逐条判定依据；「返回」关闭。</li>
+          <li><b>往下滑</b>可以选片段、调判定严格度、看任务清单；☰ 里有说明和退出。</li>
+        </ol>
+      </div>
+      <div class="touch-only help-touch">
+        <svg viewBox="0 0 360 300" role="img" aria-label="手机竖屏操作图解">
+          <rect x="4" y="4" width="352" height="292" rx="22" fill="#0b1222" stroke="#334155" stroke-width="2"/>
+          <rect x="18" y="18" width="324" height="28" rx="6" fill="#1e293b"/>
+          <text x="30" y="37" class="kl">私人智能教练</text>
+          <rect x="160" y="22" width="52" height="20" rx="5" fill="#22d3ee"/><text x="186" y="36" class="kk" text-anchor="middle" fill="#06222a">看示例</text>
+          <text x="238" y="36" class="kl">我来练</text><text x="282" y="36" class="kl">任务</text>
+          <text x="326" y="38" class="kk" text-anchor="middle">☰</text>
+          <rect x="18" y="54" width="324" height="130" rx="8" fill="#111c33"/>
+          <polyline points="180,74 180,108 150,130 180,108 210,130 180,108 180,140 158,170 180,140 202,170" fill="none" stroke="#22d3ee" stroke-width="4" stroke-linecap="round"/>
+          <text x="30" y="178" class="kh">画面：骨架 / 摄像头，按宽度缩放</text>
+          <text x="38" y="216" class="kk" font-size="26">5</text><text x="58" y="216" class="kl">次</text>
+          <text x="92" y="206" class="kl">站立 · 膝角 170°</text><text x="92" y="222" class="kh">第 5 次：✓ 标准</text>
+          <rect x="18" y="232" width="120" height="26" rx="6" fill="#22d3ee"/><text x="78" y="250" class="kk" text-anchor="middle" fill="#06222a">开始 / 暂停</text>
+          <rect x="146" y="232" width="96" height="26" rx="6" fill="#273449" stroke="#334155"/><text x="194" y="250" class="kk" text-anchor="middle">换动作</text>
+          <rect x="250" y="232" width="92" height="26" rx="6" fill="#273449" stroke="#334155"/><text x="296" y="250" class="kk" text-anchor="middle">回放</text>
+          <rect x="18" y="264" width="324" height="24" rx="6" fill="#273449" stroke="#334155"/><text x="180" y="281" class="kk" text-anchor="middle">看判定依据（全屏打开，「返回」关闭）</text>
+        </svg>
+      </div>
+      <p class="muted small kbd-only">快捷键：空格 播放/暂停 · → ← 逐帧 · B 大屏模式 · H 再次打开本说明</p>
+      <p class="muted small touch-only">没有摄像头或没给权限也没关系：「看示例」和「任务」都不需要摄像头。横屏时会提示转回竖屏。</p>
+    </div>
+    <div class="modal-foot"><button class="btn primary" id="helpClose">开始看示例</button></div>
+  </div>
+</div>
+<div class="tooltip" id="tooltip"></div>
+<div class="toast" id="toast"></div>
+
+<script src="credits.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

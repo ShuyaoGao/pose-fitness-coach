@@ -1,0 +1,867 @@
+{
+  "generated_by": "tools/replay_report.mjs",
+  "note": "示例动作由 play_src/replayGen.js 程序合成（不是真人录制），规则来自 src/exercises/*.js。",
+  "fps": 30,
+  "presets": {
+    "squat": {
+      "loose": {
+        "label": "宽松",
+        "thresholds": {
+          "standAngle": 170,
+          "deepTarget": 90,
+          "upAngle": 160,
+          "downAngle": 130,
+          "shallowAngle": 115,
+          "valgusRatio": 0.45
+        }
+      },
+      "standard": {
+        "label": "标准",
+        "thresholds": {
+          "standAngle": 170,
+          "deepTarget": 90,
+          "upAngle": 160,
+          "downAngle": 130,
+          "shallowAngle": 105,
+          "valgusRatio": 0.55
+        }
+      },
+      "strict": {
+        "label": "严格",
+        "thresholds": {
+          "standAngle": 170,
+          "deepTarget": 90,
+          "upAngle": 160,
+          "downAngle": 130,
+          "shallowAngle": 95,
+          "valgusRatio": 0.65
+        }
+      }
+    },
+    "jumpingJack": {
+      "loose": {
+        "label": "宽松",
+        "thresholds": {
+          "openRatio": 1.3,
+          "closeRatio": 1,
+          "fullSpread": 1.45,
+          "spreadRest": 0.6,
+          "spreadMax": 1.9
+        }
+      },
+      "standard": {
+        "label": "标准",
+        "thresholds": {
+          "openRatio": 1.3,
+          "closeRatio": 1,
+          "fullSpread": 1.6,
+          "spreadRest": 0.6,
+          "spreadMax": 1.9
+        }
+      },
+      "strict": {
+        "label": "严格",
+        "thresholds": {
+          "openRatio": 1.3,
+          "closeRatio": 1,
+          "fullSpread": 1.8,
+          "spreadRest": 0.6,
+          "spreadMax": 1.9
+        }
+      }
+    }
+  },
+  "clips": {
+    "squat_good": {
+      "name": "深蹲 · 标准（5 次）",
+      "exercise": "squat",
+      "frames": 420,
+      "seconds": 13.97,
+      "by_preset": {
+        "loose": {
+          "count": 5,
+          "good": 5,
+          "cue_counts": {},
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 101,
+              "min_valgus_ratio": 1.42,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 98,
+              "min_valgus_ratio": 1.49,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 97,
+              "min_valgus_ratio": 1.44,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 99,
+              "min_valgus_ratio": 1.43,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 100,
+              "min_valgus_ratio": 1.47,
+              "cues": []
+            }
+          ]
+        },
+        "standard": {
+          "count": 5,
+          "good": 5,
+          "cue_counts": {},
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 101,
+              "min_valgus_ratio": 1.42,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 98,
+              "min_valgus_ratio": 1.49,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 97,
+              "min_valgus_ratio": 1.44,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 99,
+              "min_valgus_ratio": 1.43,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 100,
+              "min_valgus_ratio": 1.47,
+              "cues": []
+            }
+          ]
+        },
+        "strict": {
+          "count": 5,
+          "good": 0,
+          "cue_counts": {
+            "shallow": 5
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 101,
+              "min_valgus_ratio": 1.42,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 98,
+              "min_valgus_ratio": 1.49,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 97,
+              "min_valgus_ratio": 1.44,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 99,
+              "min_valgus_ratio": 1.43,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 100,
+              "min_valgus_ratio": 1.47,
+              "cues": [
+                "shallow"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "squat_shallow": {
+      "name": "深蹲 · 蹲太浅（4 次）",
+      "exercise": "squat",
+      "frames": 348,
+      "seconds": 11.57,
+      "by_preset": {
+        "loose": {
+          "count": 4,
+          "good": 4,
+          "cue_counts": {},
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 109,
+              "min_valgus_ratio": 1.41,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 111,
+              "min_valgus_ratio": 1.42,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 108,
+              "min_valgus_ratio": 1.41,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 112,
+              "min_valgus_ratio": 1.46,
+              "cues": []
+            }
+          ]
+        },
+        "standard": {
+          "count": 4,
+          "good": 0,
+          "cue_counts": {
+            "shallow": 4
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 109,
+              "min_valgus_ratio": 1.41,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 111,
+              "min_valgus_ratio": 1.42,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 108,
+              "min_valgus_ratio": 1.41,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 112,
+              "min_valgus_ratio": 1.46,
+              "cues": [
+                "shallow"
+              ]
+            }
+          ]
+        },
+        "strict": {
+          "count": 4,
+          "good": 0,
+          "cue_counts": {
+            "shallow": 4
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 109,
+              "min_valgus_ratio": 1.41,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 111,
+              "min_valgus_ratio": 1.42,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 108,
+              "min_valgus_ratio": 1.41,
+              "cues": [
+                "shallow"
+              ]
+            },
+            {
+              "min_knee_angle": 112,
+              "min_valgus_ratio": 1.46,
+              "cues": [
+                "shallow"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "squat_valgus": {
+      "name": "深蹲 · 膝盖内扣（4 次）",
+      "exercise": "squat",
+      "frames": 348,
+      "seconds": 11.57,
+      "by_preset": {
+        "loose": {
+          "count": 4,
+          "good": 4,
+          "cue_counts": {},
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 95,
+              "min_valgus_ratio": 0.47,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 94,
+              "min_valgus_ratio": 0.47,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 101,
+              "min_valgus_ratio": 0.48,
+              "cues": []
+            },
+            {
+              "min_knee_angle": 100,
+              "min_valgus_ratio": 0.48,
+              "cues": []
+            }
+          ]
+        },
+        "standard": {
+          "count": 4,
+          "good": 0,
+          "cue_counts": {
+            "valgus": 4
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 95,
+              "min_valgus_ratio": 0.47,
+              "cues": [
+                "valgus"
+              ]
+            },
+            {
+              "min_knee_angle": 94,
+              "min_valgus_ratio": 0.47,
+              "cues": [
+                "valgus"
+              ]
+            },
+            {
+              "min_knee_angle": 101,
+              "min_valgus_ratio": 0.48,
+              "cues": [
+                "valgus"
+              ]
+            },
+            {
+              "min_knee_angle": 100,
+              "min_valgus_ratio": 0.48,
+              "cues": [
+                "valgus"
+              ]
+            }
+          ]
+        },
+        "strict": {
+          "count": 4,
+          "good": 0,
+          "cue_counts": {
+            "valgus": 4,
+            "shallow": 2
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "min_knee_angle": 95,
+              "min_valgus_ratio": 0.47,
+              "cues": [
+                "valgus"
+              ]
+            },
+            {
+              "min_knee_angle": 94,
+              "min_valgus_ratio": 0.47,
+              "cues": [
+                "valgus"
+              ]
+            },
+            {
+              "min_knee_angle": 101,
+              "min_valgus_ratio": 0.48,
+              "cues": [
+                "shallow",
+                "valgus"
+              ]
+            },
+            {
+              "min_knee_angle": 100,
+              "min_valgus_ratio": 0.48,
+              "cues": [
+                "shallow",
+                "valgus"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "squat_cropped": {
+      "name": "深蹲 · 脚出了画面（不计数）",
+      "exercise": "squat",
+      "frames": 276,
+      "seconds": 9.17,
+      "by_preset": {
+        "loose": {
+          "count": 0,
+          "good": 0,
+          "cue_counts": {},
+          "not_ready_frames": 276,
+          "reps": []
+        },
+        "standard": {
+          "count": 0,
+          "good": 0,
+          "cue_counts": {},
+          "not_ready_frames": 276,
+          "reps": []
+        },
+        "strict": {
+          "count": 0,
+          "good": 0,
+          "cue_counts": {},
+          "not_ready_frames": 276,
+          "reps": []
+        }
+      }
+    },
+    "jj_good": {
+      "name": "开合跳 · 标准（6 次）",
+      "exercise": "jumpingJack",
+      "frames": 240,
+      "seconds": 7.97,
+      "by_preset": {
+        "loose": {
+          "count": 6,
+          "good": 6,
+          "cue_counts": {},
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.75,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": true,
+              "cues": []
+            }
+          ]
+        },
+        "standard": {
+          "count": 6,
+          "good": 6,
+          "cue_counts": {},
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.75,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": true,
+              "cues": []
+            }
+          ]
+        },
+        "strict": {
+          "count": 6,
+          "good": 0,
+          "cue_counts": {
+            "narrow": 6
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.75,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.74,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "jj_arms_low": {
+      "name": "开合跳 · 手没举过头顶（5 次）",
+      "exercise": "jumpingJack",
+      "frames": 210,
+      "seconds": 6.97,
+      "by_preset": {
+        "loose": {
+          "count": 5,
+          "good": 0,
+          "cue_counts": {
+            "arms_low": 5
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.77,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            },
+            {
+              "max_spread": 1.75,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            },
+            {
+              "max_spread": 1.73,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            }
+          ]
+        },
+        "standard": {
+          "count": 5,
+          "good": 0,
+          "cue_counts": {
+            "arms_low": 5
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.77,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            },
+            {
+              "max_spread": 1.75,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            },
+            {
+              "max_spread": 1.73,
+              "arms_up": false,
+              "cues": [
+                "arms_low"
+              ]
+            }
+          ]
+        },
+        "strict": {
+          "count": 5,
+          "good": 0,
+          "cue_counts": {
+            "arms_low": 5,
+            "narrow": 5
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.77,
+              "arms_up": false,
+              "cues": [
+                "arms_low",
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": false,
+              "cues": [
+                "arms_low",
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.76,
+              "arms_up": false,
+              "cues": [
+                "arms_low",
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.75,
+              "arms_up": false,
+              "cues": [
+                "arms_low",
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.73,
+              "arms_up": false,
+              "cues": [
+                "arms_low",
+                "narrow"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "jj_narrow": {
+      "name": "开合跳 · 腿没跳开（5 次）",
+      "exercise": "jumpingJack",
+      "frames": 210,
+      "seconds": 6.97,
+      "by_preset": {
+        "loose": {
+          "count": 5,
+          "good": 5,
+          "cue_counts": {},
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.52,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.56,
+              "arms_up": true,
+              "cues": []
+            },
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": []
+            }
+          ]
+        },
+        "standard": {
+          "count": 5,
+          "good": 0,
+          "cue_counts": {
+            "narrow": 5
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.52,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.56,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            }
+          ]
+        },
+        "strict": {
+          "count": 5,
+          "good": 0,
+          "cue_counts": {
+            "narrow": 5
+          },
+          "not_ready_frames": 0,
+          "reps": [
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.52,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.56,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            },
+            {
+              "max_spread": 1.55,
+              "arms_up": true,
+              "cues": [
+                "narrow"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

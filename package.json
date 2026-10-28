@@ -1,0 +1,25 @@
+{
+  "name": "pose-fitness-coach",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "私人智能教练：摄像头姿态识别（MediaPipe）+ 可解释的规则引擎（深蹲 / 开合跳计数与纠错），离线双击即用的课堂演示",
+  "scripts": {
+    "dev": "node tools/copy_wasm.mjs && vite",
+    "build": "node tools/copy_wasm.mjs && vite build",
+    "preview": "vite preview",
+    "test": "node tests/squat.test.mjs && node tests/jumpingJack.test.mjs && node tests/thresholds.test.mjs && node tests/replay.test.mjs",
+    "test:e2e": "python tools/browser_check.py",
+    "test:mobile": "python tools/mobile_check_pfc.py",
+    "report": "node tools/replay_report.mjs",
+    "build:play": "node tools/build_play.mjs"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "0.10.35",
+    "body-muscles": "^1.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.0.14"
+  },
+  "license": "MIT"
+}

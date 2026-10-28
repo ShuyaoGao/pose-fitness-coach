@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>私人智能教练 · 第二阶段（深蹲 + 开合跳）</title>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>🏋️ 私人智能教练 <span class="badge">第二阶段</span></h1>
+      <p class="subtitle">摄像头实时识别动作 → 自动计数 + 纠错 + 肌群高亮 + 语音播报 + 本地大模型教练点评（纯前端 + 本机 Ollama，零云端依赖）</p>
+    </header>
+
+    <main class="layout">
+      <!-- 左侧：摄像头 + 骨架 -->
+      <section class="panel camera-panel">
+        <div class="video-wrap" id="videoWrap">
+          <!-- video 与 canvas 叠加；用 CSS 镜像，像照镜子一样 -->
+          <video id="video" playsinline></video>
+          <canvas id="overlay"></canvas>
+          <div class="hint" id="hint">点击「开始」并允许使用摄像头</div>
+        </div>
+
+        <div class="controls">
+          <button id="startBtn" class="btn primary">开始</button>
+          <button id="resetBtn" class="btn" disabled>重置计数</button>
+          <select id="exerciseSelect" class="btn select" title="切换动作">
+            <option value="squat" selected>深蹲</option>
+            <option value="jumpingJack">开合跳</option>
+          </select>
+          <button id="speechBtn" class="btn" title="开/关语音播报">🔊 语音开</button>
+        </div>
+        <div class="engine-info" id="engineInfo"></div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">动作</div>
+            <div class="stat-value" id="exerciseName">深蹲</div>
+          </div>
+          <div class="stat big">
+            <div class="stat-label">次数</div>
+            <div class="stat-value" id="count">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">阶段</div>
+            <div class="stat-value" id="phase">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label" id="metricLabel">膝关节角度</div>
+            <div class="stat-value" id="kneeAngle">—</div>
+          </div>
+        </div>
+
+        <!-- 蹲深进度条 -->
+        <div class="depth-bar">
+          <div class="depth-fill" id="depthFill"></div>
+          <span class="depth-text">蹲深</span>
+        </div>
+      </section>
+
+      <!-- 右侧：肌肉图 + 反馈 -->
+      <section class="panel side-panel">
+        <h2>发力肌群</h2>
+        <div class="muscles">
+          <div class="muscle-chart" id="muscleFront"></div>
+          <div class="muscle-chart" id="muscleBack"></div>
+        </div>
+
+        <h2>教练反馈
+          <span class="tag">本地大模型点评（Ollama）· 不可用时自动用模板话术</span>
+        </h2>
+        <div class="feedback-now" id="feedbackNow">站到镜头前，开始你的第一组训练吧。</div>
+        <ul class="feedback-log" id="feedbackLog"></ul>
+        <div class="summary" id="summary"></div>
+
+        <h2>训练历史
+          <span class="tag">最近 10 组 · 存在本机浏览器</span>
+          <button id="clearHistoryBtn" class="btn mini" title="清空全部历史">清空</button>
+        </h2>
+        <div class="history-totals" id="historyTotals"></div>
+        <ul class="history-list" id="historyList"></ul>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>姿态：MediaPipe Pose Landmarker · 肌肉图：body-muscles (Apache-2.0) · 教练点评：本机 Ollama（可选）· 语音：Web Speech API · 规则与计数：本项目自写</span>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

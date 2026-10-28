@@ -1,0 +1,56 @@
+{
+  "generated_by": "tools/build_play.mjs",
+  "tasks_vision_version": "0.10.35",
+  "sources": {
+    "wasm": {
+      "file": "node_modules/@mediapipe/tasks-vision/wasm/vision_wasm_internal.wasm",
+      "bytes": 11153617,
+      "md5": "6aa1415cf1cad191a764a0c3b5735295"
+    },
+    "model": {
+      "file": "public/models/pose_landmarker_lite.task",
+      "bytes": 5777746,
+      "md5": "04a75ddf7c811ac7a1a4523266dd7d88"
+    }
+  },
+  "play_files": [
+    {
+      "path": "play/THIRD_PARTY_NOTICES.txt",
+      "bytes": 12718
+    },
+    {
+      "path": "play/app.js",
+      "bytes": 304780
+    },
+    {
+      "path": "play/credits.js",
+      "bytes": 650
+    },
+    {
+      "path": "play/engine/model_b64.js",
+      "bytes": 7703976
+    },
+    {
+      "path": "play/engine/vision_wasm_internal.js",
+      "bytes": 322044
+    },
+    {
+      "path": "play/engine/wasm_b64.js",
+      "bytes": 14871806
+    },
+    {
+      "path": "play/index.html",
+      "bytes": 13228
+    },
+    {
+      "path": "play/style.css",
+      "bytes": 24284
+    }
+  ],
+  "play_total_bytes": 23253486,
+  "release": {
+    "file": "release/pose-fitness-coach-v1.0.zip",
+    "bytes": 10292184,
+    "files": 9
+  }
+}

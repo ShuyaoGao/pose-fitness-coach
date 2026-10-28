@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "如果在教学或研究中使用了本项目，请按以下信息引用。If you use this project, please cite it as below."
+title: "私人智能教练 Pose Fitness Coach：姿态识别 + 规则引擎的课堂演示"
+type: software
+authors:
+  - family-names: "Gao"
+    given-names: "Shuyao"
+    email: "gaoshuyao.mk@gmail.com"
+    affiliation: "aSSIST University (Seoul School of Integrated Sciences and Technologies)"
+version: "1.0"
+license: MIT
+repository-code: "https://github.com/ShuyaoGao/pose-fitness-coach"
+url: "https://shuyaogao.github.io/pose-fitness-coach/"
+abstract: >-
+  A browser-only teaching demo for the AI Teaching Demos series. A pretrained pose
+  network (MediaPipe Pose Landmarker) turns camera frames into 33 body keypoints; a
+  hand-written, inspectable rule engine (joint angles plus a hysteresis state machine)
+  counts squats and jumping jacks and explains every verdict. Works offline by
+  double-clicking play/index.html; ships with procedurally generated skeleton clips so
+  it can be explored without a camera.
+keywords:
+  - course-demo
+  - pose-estimation
+  - mediapipe
+  - fitness
+  - rule-based-system
